@@ -1,28 +1,39 @@
+from rest_framework import serializers
 from test_app.models import TestModel
 from django.shortcuts import render
 from rest_framework.views import APIView
 from django.http import JsonResponse
 from .models import TestModel
 from django.forms.models import model_to_dict
+from .serializers import SimpleSerializer
 
 
-class simple(APIView):
+class Simple(APIView):
 
     def post(self, request):
-        # salviamo il Json che ci viene passato nei form data
-        new_test_content = TestModel.objects.create(
-            name=request.data["name"],
-            description=request.data["description"],
-            phone_number=request.data["phone_number"],
-            is_live=request.data["is_live"],
-            amount=request.data["amount"],
-        )
-
-        return JsonResponse({'data': model_to_dict(new_test_content)})
+        # Serializzo prima quanto ricevuto dal cliente nei FORM DATA
+        serializers = SimpleSerializer(data=request.data)
+        # notifico automaticamente il client in caso di errori di validazione nei dati ricevuti
+        serializers.is_valid(raise_exception=True)
+        serializers.save()  # chiama il metodo Create del Serializer
+        return JsonResponse({"data": serializers.data})
 
     def get(self, request):
         content = TestModel.objects.all()
-        print('zero', list(content))
-        print('uno', list(content.values()))
+        return JsonResponse({'data': SimpleSerializer(content, many=True).data})
 
-        return JsonResponse({'data': 'ciao'})
+    def put(self, request, *args, **kwargs):
+        model_id = kwargs.get("id", None)
+        if not model_id:
+            return JsonResponse({"error": "method /PUT/ not alloed"})
+
+        try:
+            instance = TestModel.objects.get(id=model_id)
+        except:
+            return JsonResponse({"error": f"object with id '{model_id}' does not exists"})
+        # credo che passare l'instance sia ridondante, provato senza e funziona
+        serializers = SimpleSerializer(data=request.data, instance=instance)
+        # notifico automaticamente il client in caso di errori di validazione nei dati ricevuti
+        serializers.is_valid(raise_exception=True)
+        serializers.save()  # chiama il metodo Create del Serializer
+        return JsonResponse({"data": serializers.data})
