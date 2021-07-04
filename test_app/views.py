@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, generics
 from test_app.models import TestModel
 from django.shortcuts import render
 from rest_framework.views import APIView
@@ -7,7 +7,25 @@ from .models import TestModel
 from django.forms.models import model_to_dict
 from .serializers import SimpleSerializer
 
+# Fa la GET ALL e la POST
 
+
+class SimpleGenerics(generics.ListCreateAPIView):
+    queryset = TestModel.objects.all()
+    serializer_class = SimpleSerializer
+
+# Fa la PUT o PATCH
+
+
+class SimpleGenericsUpdate(generics.ListCreateAPIView):
+    queryset = TestModel.objects.all()
+    serializer_class = SimpleSerializer
+    # altrimenti nella url devo passare il parametro di
+    # defaulti 'pk' invece di 'id
+    lookup_field = "id"
+
+
+# metodo verbose per definire le API
 class Simple(APIView):
 
     def post(self, request):
