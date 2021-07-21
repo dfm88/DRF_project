@@ -1,16 +1,4 @@
 from rest_framework import serializers
-from rest_framework.fields import ReadOnlyField
-from .models import TestModel
-
-
-class SimpleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TestModel
-        # --> se voglio mettere solo alcuni fields
-        # fields = ("name", "description")
-
-        # --> se voglio metterli tutti
-        fields = "__all__"
 
 
 # Serializer per il model TestModel (superata dak ModelSerializer)

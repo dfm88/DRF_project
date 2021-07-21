@@ -1,17 +1,9 @@
 from rest_framework import serializers, generics
-from test_app.models import TestModel
 from django.shortcuts import render
 from rest_framework.views import APIView
 from django.http import JsonResponse
-from .models import TestModel
 from django.forms.models import model_to_dict
-from .serializers import SimpleSerializer
 from rest_framework import viewsets
-
-
-class SimpleViewSet(viewsets.ModelViewSet):
-    queryset = TestModel.objects.all()
-    serializer_class = SimpleSerializer
 
 
 # # Fa la GET ALL e la POST

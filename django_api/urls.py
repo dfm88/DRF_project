@@ -2,13 +2,13 @@
 from django.contrib import admin
 from django.urls import path, include
 # from test_app.views import Simple, SimpleGenericsUpdate, SimpleGenerics
-from test_app.views import SimpleViewSet
+
 
 from rest_framework.routers import DefaultRouter
 from django.conf import settings
 
 router = DefaultRouter()
-router.register('simple-viewset', SimpleViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
