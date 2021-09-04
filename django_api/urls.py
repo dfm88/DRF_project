@@ -1,27 +1,25 @@
-
 from django.contrib import admin
 from django.urls import path, include
-# from test_app.views import Simple, SimpleGenericsUpdate, SimpleGenerics
-
-
-from rest_framework.routers import DefaultRouter
 from django.conf import settings
-
-router = DefaultRouter()
-
+from django.conf.urls.static import static
+#from filebrowser.sites import site
+# from rest_framework_simplejwt.views import (
+#     TokenObtainPairView,
+#     TokenRefreshView,
+# )
 
 urlpatterns = [
+    #path('admin/filebrowser', site.urls),
     path('admin/', admin.site.urls),
-    # path('simple/', Simple.as_view()),
-    # path('simple/<int:id>', Simple.as_view()),
-    # path('simple-generics', SimpleGenerics.as_view()),
-    # path('simple-generics/<int:id>', SimpleGenericsUpdate.as_view()),
-    path('', include(router.urls))
-]
+    # path('api/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/refresh', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('', include('blog.urls')),
+    path('gateway/', include('gateway.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar
 
-    urlpatterns += [
+    urlpatterns = [
         path('__debug__/', include(debug_toolbar.urls))
-    ]
+    ] + urlpatterns
