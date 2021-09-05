@@ -115,10 +115,17 @@ class RefreshView(APIView):
 
         return Response({"access": access, "refresh": refresh})
 
-#  @Authentication(IsAuthenticated)
+
+# from rest_framework.decorators import authentication_classes
+# from rest_framework.decorators import permission_classes
+# from rest_framework.permissions import IsAuthenticated
+# @authentication_classes(IsAuthenticated)
+from rest_framework.permissions import IsAuthenticated
+# classe per verificare il servizio di autenticazione
 class GetSecuredInfo(APIView):
     permission_classes = [IsAuthenticated]
+    #authentication_classes = [Authentication]
 
-    def get(self, request):
+    def get(self, request): 
         print(request.user)
         return Response({"data": "This is a secured info"})
