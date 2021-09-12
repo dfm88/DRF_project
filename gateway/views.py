@@ -129,3 +129,10 @@ class GetSecuredInfo(APIView):
     def get(self, request): 
         print(request.user)
         return Response({"data": "This is a secured info"})
+
+class TestException(APIView):
+    #authentication_classes = [Authentication]
+
+    def get(self, request): 
+        a = 2/0 #throw exception
+        return Response({"data": "This is a secured info"})

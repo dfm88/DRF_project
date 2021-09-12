@@ -64,7 +64,8 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": ("gateway.authentication.Authentication",)
+    "DEFAULT_AUTHENTICATION_CLASSES": ("gateway.authentication.Authentication",),
+    "EXCEPTION_HANDLER": ("gateway.custom_exc_handler.custom_exception_handler",),
 }
 
 
@@ -154,6 +155,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# MEDIA_URL = '/media/'
+# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': config("CLOUDINARY_CLOUD_NAME"),
+#     'API_KEY': config("CLOUDINARY_API_KEY"),
+#     'API_SECRET': config("CLOUDINARY_API_SECRET")
+# }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

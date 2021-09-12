@@ -15,7 +15,9 @@ urlpatterns = [
     # path('api/refresh', TokenRefreshView.as_view(), name='token_refresh'),
     # path('', include('blog.urls')),
     path('gateway/', include('gateway.urls')),
+    path('user-main/', include('user.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 if settings.DEBUG:
     import debug_toolbar
